@@ -1,23 +1,23 @@
 <template>
-  <div class="p-5 bg-white flex justify-center items-center shadow">
-    <div class="w-full">
+  <div class="p-5 bg-white flex justify-between items-center space-x-5 shadow">
+    <div>
       <img
         class="w-30 cursor-pointer object-cover"
         src="@/assets/images/logo.png"
-        alt=""
+        alt="logo"
       />
     </div>
 
-    <div class="flex justify-end space-x-5 text-indigo-700">
-      <div class="cursor-pointer hover:text-indigo-900">Category</div>
-      <div>
+    <div class="w-full flex justify-end space-x-5 items-center text-indigo-700">
+      <div class=" cursor-pointer hover:text-indigo-900">Category</div>
+      <div v-if="windowWidth < 640">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="w-6 h-6 cursor-pointer hover:text-indigo-900"
+          class=" w-6 h-6 cursor-pointer hover:text-indigo-900"
         >
           <path
             stroke-linecap="round"
@@ -25,6 +25,27 @@
             d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
           />
         </svg>
+      </div>
+      <div class="relative w-full" v-else>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="absolute top-2 left-2 w-5 h-5 cursor-pointer hover:text-indigo-900"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+          />
+        </svg>
+        <input
+          class="p-1 pl-10 w-full font-thin focus:outline-none ring ring-offset-2 ring-indigo-700 rounded-full"
+          type="text"
+          placeholder="searching..."
+        />
       </div>
       <div>
         <svg
@@ -49,6 +70,18 @@
   </div>
 </template>
 <script>
-export default {};
+import { onMounted, ref } from "vue";
+export default {
+  setup() {
+    const windowWidth = ref(window.innerWidth);
+    const onResize = () => {
+      windowWidth.value = window.innerWidth;
+    };
+    onMounted(() => {
+      window.addEventListener("resize", onResize);
+    });
+    return { windowWidth };
+  },
+};
 </script>
 <style></style>
