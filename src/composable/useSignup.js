@@ -5,7 +5,7 @@ const error = ref(null);
 const isPending = ref(null);
 
 const signup = async (email, password, displayName) => {
-    error.value = null;
+    // error.value = null;
     isPending.value = true;
     
     try {

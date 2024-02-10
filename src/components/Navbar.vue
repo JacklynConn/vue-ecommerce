@@ -70,7 +70,6 @@
       </div>
 
       <div v-else class="flex items-center space-x-2">
-
         <div>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -102,8 +101,58 @@
         </div>
 
         <div>
-          <div class="flex justify-center items-center w-7 h-7 rounded-full hover:bg-indigo-900 cursor-pointer text-sm bg-indigo-700 text-white">
-            Th
+          <div
+            class="group relative flex justify-center items-center w-7 h-7 rounded-full hover:bg-indigo-900 text-sm bg-indigo-700 text-white"
+          >
+            <span class="cursor-pointer uppercase">
+              {{ user?.displayName[0] }}
+            </span>
+
+            <div class="absolute top-6 -right-5 w-16 h-10 bg-transparent"></div>
+
+            <!-- Dropdown -->
+            <div
+              class="hidden group-hover:block absolute top-14 -right-5 bg-white shadow w-96 h-96"
+            >
+              <div class="flex space-x-2 p-5 border-b-2 border-gray-200">
+                <div
+                  class="flex justify-center items-center bg-indigo-700 text-white uppercase w-8 h-8 rounded-full"
+                >
+                  <div>{{ user?.displayName[0] }}</div>
+                </div>
+                <div class="text-gray-700 leading-none">
+                  <p class="uppercase font-semibold">
+                    {{ user?.displayName }}
+                  </p>
+                  <span class="uppercase text-gray-400 text-sm">{{
+                    user?.email
+                  }}</span>
+                </div>
+              </div>
+
+              <div class="py-5 px-7 space-y-2 border-b-2 border-gray-200">
+                <p
+                  class="cursor-default text-gray-700 text-sm font-medium hover:text-indigo-700"
+                >
+                  Account Settings
+                </p>
+                <p
+                  class="cursor-default text-gray-700 text-sm font-medium hover:text-indigo-700"
+                >
+                  Order History
+                </p>
+                <p
+                  class="cursor-default text-gray-700 text-sm font-medium hover:text-indigo-700"
+                >
+                  Purchased History
+                </p>
+              </div>
+              <div @click="handleSignout"
+                class="text-gray-700 hover:text-indigo-700 cursor-pointer font-black py-5 px-7"
+              >
+                sigout
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -113,6 +162,9 @@
 <script>
 import { onMounted, ref } from "vue";
 import getUser from "@/composable/getUser";
+import { projectAuth } from "@/firebase/config";  // import firebase auth service
+import router from '@/router';
+
 export default {
   setup() {
     const windowWidth = ref(window.innerWidth);
@@ -124,7 +176,13 @@ export default {
     onMounted(() => {
       window.addEventListener("resize", onResize);
     });
-    return { windowWidth, user };
+
+    const handleSignout = async () => {
+      await projectAuth.signOut();
+      router.push({ name: "Signin" });
+    };
+
+    return { windowWidth, user, handleSignout };
   },
 };
 </script>
