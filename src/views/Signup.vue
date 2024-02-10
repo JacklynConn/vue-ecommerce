@@ -15,7 +15,7 @@
       >
         Signup Form
       </h1>
-      <form class="space-y-4" action="">
+      <form @submit.prevent="handleSignup" class="space-y-4">
         <div class="flex items-center">
           <div class="p-2 border-2 border-indigo-700 rounded-l-md border-r-0">
             <svg
@@ -35,6 +35,7 @@
               type="text"
               placeholder="username"
               autofocus
+              v-model="username"
             />
           </div>
         </div>
@@ -58,8 +59,9 @@
           <div class="w-full">
             <input
               class="text-gray-700 font-thin p-2 w-full rounded-r-md focus:outline-none border-2 border-indigo-700"
-              type="text"
+              type="email"
               placeholder="email"
+              v-model="email"
             />
           </div>
         </div>
@@ -84,6 +86,7 @@
               class="text-gray-700 font-thin p-2 w-full rounded-r-md focus:outline-none border-2 border-indigo-700"
               type="text"
               placeholder="phone"
+              v-model="phone"
             />
           </div>
         </div>
@@ -109,6 +112,7 @@
               class="text-gray-700 font-thin p-2 w-full rounded-r-md focus:outline-none border-2 border-indigo-700"
               type="text"
               placeholder="telegram"
+              v-model="telegram"
             />
           </div>
         </div>
@@ -135,6 +139,7 @@
               class="text-gray-700 font-thin p-2 w-full rounded-r-md focus:outline-none border-2 border-indigo-700"
               type="text"
               placeholder="facebook"
+              v-model="facebook"
             />
           </div>
         </div>
@@ -159,6 +164,7 @@
               class="text-gray-700 font-thin p-2 w-full rounded-r-md focus:outline-none border-2 border-indigo-700"
               type="text"
               placeholder="location"
+              v-model="location"
             />
           </div>
         </div>
@@ -181,8 +187,9 @@
           <div class="w-full">
             <input
               class="text-gray-700 font-thin p-2 w-full rounded-r-md focus:outline-none border-2 border-indigo-700"
-              type="text"
+              type="password"
               placeholder="password"
+              v-model="password"
             />
           </div>
         </div>
@@ -205,15 +212,16 @@
           <div class="w-full">
             <input
               class="text-gray-700 font-thin p-2 w-full rounded-r-md focus:outline-none border-2 border-indigo-700"
-              type="text"
+              type="password"
               placeholder="confirm password"
+              v-model="confirm"
             />
           </div>
         </div>
 
         <div>
           <button
-            v-if="true"
+            v-if="!isPending"
             class="hover:bg-indigo-900 hover:text-white w-full py-2 rounded-md shadow bg-white font-mono text-indigo-700"
           >
             Sign up
@@ -256,10 +264,45 @@
 <script>
 import Navbar from "@/components/Navbar.vue";
 import Footer from "@/components/Footer.vue";
+import { ref } from "vue";
+import useSignup from "@/composable/useSignup";
 export default {
   components: {
     Navbar,
     Footer,
+  },
+  setup() {
+    const username = ref("");
+    const email = ref("");
+    const phone = ref("");
+    const telegram = ref("");
+    const facebook = ref("");
+    const location = ref("");
+    const password = ref("");
+    const confirm = ref("");
+
+    const { error, signup, isPending } = useSignup();
+
+    const handleSignup = async () => {
+      if (password.value != confirm.value) {
+        return (error.value = "Passwords do not match");
+      }
+
+      await signup(email.value, password.value, username.value);
+    };
+
+    return {
+      username,
+      email,
+      phone,
+      telegram,
+      facebook,
+      location,
+      password,
+      confirm,
+      handleSignup,
+      isPending,
+    };
   },
 };
 </script>
