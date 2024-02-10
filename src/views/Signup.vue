@@ -219,6 +219,8 @@
           </div>
         </div>
 
+        <label class="text-red-600 font-thin text-sm" v-if="error">{{ error }}</label>
+
         <div>
           <button
             v-if="!isPending"
@@ -266,6 +268,8 @@ import Navbar from "@/components/Navbar.vue";
 import Footer from "@/components/Footer.vue";
 import { ref } from "vue";
 import useSignup from "@/composable/useSignup";
+import useCollection from "@/composable/useCollection";
+import { useRouter } from "vue-router"; // import router
 export default {
   components: {
     Navbar,
@@ -282,13 +286,27 @@ export default {
     const confirm = ref("");
 
     const { error, signup, isPending } = useSignup();
+    const { addUser } = useCollection("users");
+    const router = useRouter();
 
     const handleSignup = async () => {
       if (password.value != confirm.value) {
         return (error.value = "Passwords do not match");
       }
 
-      await signup(email.value, password.value, username.value);
+      const res = await signup(email.value, password.value, username.value);
+
+      if (res.user.uid) {
+        await addUser(res.user.uid, {
+          phone: phone.value,
+          telegram: telegram.value,
+          facebook: facebook.value,
+          location: location.value,
+        });
+        if(!error.value){
+          router.push({ name: "Home" });
+        }
+      }
     };
 
     return {
@@ -301,6 +319,7 @@ export default {
       password,
       confirm,
       handleSignup,
+      error,
       isPending,
     };
   },

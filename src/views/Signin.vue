@@ -7,7 +7,7 @@
 
     <!-- Signin Form -->
     <div
-      class="mb-auto mt-20 w-11/12 mx-auto bg-white rounded-md shadow py-10 px-5"
+      class="mb-auto mt-20 w-11/12 sm:w-10/12 md:w-8/12 lg:w-7/12 xl:w-6/12 mx-auto bg-white rounded-md shadow py-10 px-5"
     >
       <h1
         class="mb-5 text-indigo-700 font-bold text-center tracking-wide font-mono"
@@ -15,7 +15,7 @@
         Signin Form
       </h1>
 
-      <form class="space-y-4" action="">
+      <form @submit.prevent="handleSignin" class="space-y-4">
         <div class="flex items-center">
           <div class="p-2 border-2 border-indigo-700 rounded-l-md border-r-0">
             <svg
@@ -35,8 +35,9 @@
           <div class="w-full">
             <input
               class="text-gray-700 font-thin p-2 w-full rounded-r-md focus:outline-none border-2 border-indigo-700"
-              type="text"
+              type="email"
               placeholder="email"
+              v-model="email"
             />
           </div>
         </div>
@@ -59,15 +60,18 @@
           <div class="w-full">
             <input
               class="text-gray-700 font-thin p-2 w-full rounded-r-md focus:outline-none border-2 border-indigo-700"
-              type="text"
+              type="password"
               placeholder="password"
+              v-model="password"
             />
           </div>
         </div>
 
+        <label class="text-red-600 font-thin text-sm" v-if="error">{{ error }}</label>
+
         <div>
           <button
-            v-if="true"
+            v-if="!isPending"
             class="hover:bg-indigo-900 hover:text-white w-full py-2 rounded-md shadow bg-white font-mono text-indigo-700"
           >
             Sign in
@@ -110,10 +114,35 @@
 <script>
 import Navbar from "@/components/Navbar.vue";
 import Footer from "@/components/Footer.vue";
+import { ref } from "vue";
+import useSignin from "@/composable/useSignin";
+import { useRouter } from "vue-router";
+
 export default {
   components: {
     Navbar,
     Footer,
+  },
+  setup() {
+    const email = ref("");
+    const password = ref("");
+
+    const { error, signin, isPending } = useSignin();
+    const router = useRouter();
+
+    const handleSignin = async () => {
+      await signin(email.value, password.value);
+      if (!error.value) {
+        router.push({ name: "Home" });
+      }
+    };
+    return {
+      email,
+      password,
+      handleSignin,
+      isPending,
+      error,
+    };
   },
 };
 </script>
