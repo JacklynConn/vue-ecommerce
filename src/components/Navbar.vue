@@ -158,14 +158,19 @@
       </div>
     </div>
   </div>
+
+  <SubNavbar />
 </template>
 <script>
 import { onMounted, ref } from "vue";
 import getUser from "@/composable/getUser";
 import { projectAuth } from "@/firebase/config";  // import firebase auth service
 import router from '@/router';
-
+import SubNavbar from './SubNavbar.vue';
 export default {
+  components: {
+    SubNavbar
+  },
   setup() {
     const windowWidth = ref(window.innerWidth);
     const { user } = getUser();
