@@ -1,10 +1,11 @@
 <template>
   <div class="w-11/12 mx-auto bg-white rounded-md shadow py-10 px-5">
-    <h1 class="text-indigo-700 font-bold text-center tracking-wide font-mono">
+    <h1
+      class="mb-5 text-indigo-700 font-bold text-center tracking-wide font-mono"
+    >
       Signup Form
     </h1>
     <form class="space-y-4" action="">
-        
       <div class="flex items-center">
         <div class="p-2 border-2 border-indigo-700 rounded-l-md border-r-0">
           <svg
@@ -22,6 +23,8 @@
           <input
             class="text-gray-700 font-thin p-2 w-full rounded-r-md focus:outline-none border-2 border-indigo-700"
             type="text"
+            placeholder="username"
+            autofocus
           />
         </div>
       </div>
@@ -46,6 +49,7 @@
           <input
             class="text-gray-700 font-thin p-2 w-full rounded-r-md focus:outline-none border-2 border-indigo-700"
             type="text"
+            placeholder="email"
           />
         </div>
       </div>
@@ -69,6 +73,7 @@
           <input
             class="text-gray-700 font-thin p-2 w-full rounded-r-md focus:outline-none border-2 border-indigo-700"
             type="text"
+            placeholder="phone"
           />
         </div>
       </div>
@@ -93,6 +98,7 @@
           <input
             class="text-gray-700 font-thin p-2 w-full rounded-r-md focus:outline-none border-2 border-indigo-700"
             type="text"
+            placeholder="telegram"
           />
         </div>
       </div>
@@ -118,6 +124,7 @@
           <input
             class="text-gray-700 font-thin p-2 w-full rounded-r-md focus:outline-none border-2 border-indigo-700"
             type="text"
+            placeholder="facebook"
           />
         </div>
       </div>
@@ -141,6 +148,7 @@
           <input
             class="text-gray-700 font-thin p-2 w-full rounded-r-md focus:outline-none border-2 border-indigo-700"
             type="text"
+            placeholder="location"
           />
         </div>
       </div>
@@ -164,6 +172,7 @@
           <input
             class="text-gray-700 font-thin p-2 w-full rounded-r-md focus:outline-none border-2 border-indigo-700"
             type="text"
+            placeholder="password"
           />
         </div>
       </div>
@@ -187,10 +196,38 @@
           <input
             class="text-gray-700 font-thin p-2 w-full rounded-r-md focus:outline-none border-2 border-indigo-700"
             type="text"
+            placeholder="confirm password"
           />
         </div>
       </div>
 
+      <div>
+        <button
+          v-if="true"
+          class="hover:bg-indigo-900 hover:text-white w-full py-2 rounded-md shadow bg-white font-mono text-indigo-700"
+        >
+          Sign up
+        </button>
+
+        <button
+          v-else
+          class="relative w-full py-2 rounded-md shadow bg-white font-mono text-indigo-700"
+        >
+          <div>Signing up...</div>
+          <div class="absolute top-3 right-4">
+            <div
+              class="animate-spin rounded-full h-4 w-4 border-b-2 border-r-2 border-indigo-700"
+            ></div>
+          </div>
+        </button>
+      </div>
+
+      <div>
+        <p class="text-indigo-800 font-thin text-sm">
+          Already have an account? 
+          <span class="ml-2 font-semibold text-indigo-700 hover:text-indigo-900 cursor-pointer underline font-mono ">Signin</span>
+        </p>
+      </div>
     </form>
   </div>
 </template>
