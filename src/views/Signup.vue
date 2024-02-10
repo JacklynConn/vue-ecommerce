@@ -8,7 +8,7 @@
 
     <!-- Signup -->
     <div
-      class="mb-auto my-5 mb w-11/12 mx-auto bg-white rounded-md shadow py-10 px-5"
+      class="mb-auto my-5 mb w-11/12 sm:w-10/12 md:w-8/12 lg:w-7/12 xl:w-6/12 mx-auto bg-white rounded-md shadow py-10 px-5"
     >
       <h1
         class="mb-5 text-indigo-700 font-bold text-center tracking-wide font-mono"

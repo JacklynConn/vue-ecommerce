@@ -47,7 +47,7 @@
           placeholder="searching..."
         />
       </div>
-      <div>
+      <div v-if="!user">
         <router-link :to="{ name: 'Signin' }">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -68,21 +68,63 @@
           </svg>
         </router-link>
       </div>
+
+      <div v-else class="flex items-center space-x-2">
+
+        <div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6 hover:text-indigo-900 cursor-pointer"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418"
+            />
+          </svg>
+        </div>
+
+        <div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            class="w-6 h-6 hover:text-indigo-900 cursor-pointer"
+          >
+            <path
+              d="M2.25 2.25a.75.75 0 0 0 0 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 0 0-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 0 0 0-1.5H5.378A2.25 2.25 0 0 1 7.5 15h11.218a.75.75 0 0 0 .674-.421 60.358 60.358 0 0 0 2.96-7.228.75.75 0 0 0-.525-.965A60.864 60.864 0 0 0 5.68 4.509l-.232-.867A1.875 1.875 0 0 0 3.636 2.25H2.25ZM3.75 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM16.5 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z"
+            />
+          </svg>
+        </div>
+
+        <div>
+          <div class="flex justify-center items-center w-7 h-7 rounded-full hover:bg-indigo-900 cursor-pointer text-sm bg-indigo-700 text-white">
+            Th
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 <script>
 import { onMounted, ref } from "vue";
+import getUser from "@/composable/getUser";
 export default {
   setup() {
     const windowWidth = ref(window.innerWidth);
+    const { user } = getUser();
+
     const onResize = () => {
       windowWidth.value = window.innerWidth;
     };
     onMounted(() => {
       window.addEventListener("resize", onResize);
     });
-    return { windowWidth };
+    return { windowWidth, user };
   },
 };
 </script>
